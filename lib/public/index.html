@@ -1,0 +1,150 @@
+2
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <script src="/jquery.js"></script>
+	<script src="/jquery.js"></script>
+	<script src="/bootstrap.js"></script>
+	<script src="/ajax-cat.js"></script>
+	<script src="/index.js"></script>
+	
+	
+	<title>AJAX-CAT</title>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">AJAX-CAT</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+            </ul>
+            <p class="pull-right"><button class="btn btn-success" id="new-translation">New translation</button></p>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <h1>Translations</h1>
+
+        <table class="table table-bordered table-striped table-condensed" id="translation-list">
+        </table>
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>Created by Ondřej Odcházel & Ondřej Bojar - <a href="http://ufal.mff.cuni.cz/">Institute of Formal and Applied Linguistics</a>, 
+Charles University in Prague<br>
+Supported by the grant:
+FP7-ICT-2007-3-231720 (EuroMatrix Plus)</p>
+      </footer>
+
+    </div>
+
+
+
+
+<div class="modal" id="new-translation-modal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>New Translation</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+    	<input id="new-translation-name">
+      <select id="new-translation-pair">
+        <option value="en-cs">en-cs</option>
+      </select>
+    	<textarea id="new-translation-text" style="width: 97%; height: 150px;"></textarea>
+    </p>
+    <b>examples: </b>
+    <a href="#" class="example" data-text="French President Nicolas Sarkozy is wooing far-right voters after losing narrowly to his Socialist rival in the presidential election's first round.
+
+Francois Hollande came top with 28.6% and Mr Sarkozy got 27.1% - the first time a sitting president has lost in the first round.
+
+Third-place Marine Le Pen took the largest share of the vote her far-right National Front has ever won, with 18%.
+
+Referring to her voters, Mr Sarkozy said: I have heard you.
+
+There was this crisis vote that doubled from one election to another - an answer must be given to this crisis vote, he said.
+
+In a speech to supporters in Tours, Mr Sarkozy also blamed a media unleashed for his first round result.
+
+We were campaigning against caricatures and lies... and I thank you for your support, he said.
+
+Pollsters say Mr Hollande is the clear favourite to win the second round on 6 May, a duel between him and Mr Sarkozy, who leads the centre-right UMP.">French elections</a>, 
+  <a href="#" class="example" data-text="The Czech Republic is a landlocked country in Central Europe. The country is bordered by Poland to the north, Germany to the west, Austria to the south and Slovakia to the east. Its capital and largest city, with 1.3 million inhabitants, is Prague.
+It is a pluralist multi-party parliamentary representative democracy, a member of the European Union, NATO, the OECD, the OSCE, the Council of Europe and the Visegrád Group.
+The Czech state, formerly known as Bohemia, was formed in the late 9th century as a small duchy around Prague, at that time under dominance of the powerful Great Moravian Empire (which reached its greatest territorial extent during the reign of Svatopluk I from the House of Mojmír). After the fall of the Empire in 907, the centre of power was transferred from Moravia to Bohemia, under the Přemyslids. During the rule of Přemyslid dukes/kings and their successors, the Luxembourgs, the country reached its greatest territorial extent (13th–14th century). Life in the country was significantly affected by the Hussite wars, during which it faced economic embargo and crusades from all over Europe. Following the Battle of Mohács in 1526, the Crown of Bohemia was gradually integrated into the Habsburg monarchy as one of its three principal parts alongside the Archduchy of Austria and the Kingdom of Hungary. The Bohemian Revolt (1618–20) led to the further centralization of the monarchy including forced recatholization and Germanization. During radical reforms in the 18th century the Bohemian Crown was even de facto abolished (1749). In the 19th century the Czech lands became the industrial powerhouse of the monarchy and the core of the Republic of Czechoslovakia which was formed in 1918, following the collapse of the Austro-Hungarian empire after World War I.
+After the Munich Agreement, Polish annexation of Zaolzie and German occupation of Czechoslovakia and the consequent disillusion with the Western response and gratitude for the liberation of the major portion of Czechoslovakia by the Red Army, the Communist Party of Czechoslovakia won the majority in the 1946 elections. In a 1948 coup d'état, Czechoslovakia became a communist-ruled state. In 1968, the increasing dissatisfaction culminated in attempts to reform the communist regime. The events, known as the Prague Spring of 1968, ended with an invasion by the armies of the Warsaw Pact countries (with the exception of Romania); the troops remained in the country until the 1989 Velvet Revolution, when the communist regime collapsed. On 1 January 1993, Czechoslovakia peacefully dissolved into its constituent states, the Czech Republic and the Slovak Republic.
+The Czech Republic is the first former member of the Comecon to achieve the status of a developed country according to the World Bank. In addition, the country has the highest human development in Central and Eastern Europe, ranking as a 'Very High Human Development' nation. It is also ranked as the third most peaceful country in Europe[10] and most democratic and healthy (by infant mortality) country in the region.
+  ">Czech republic</a>, 
+
+  <a href="#" class="example" data-text="Bee Gees singer Robin Gibb has woken from a coma after more than a week and begun to show signs of recovery.
+
+Spokesman Doug Wright said he was able to nod and communicate with his family who have held a constant vigil at his beside in a central London hospital.
+
+The 62-year-old fell into a coma after contracting pneumonia in his battle against colon and liver cancer.
+
+Gibb's wife Dwina has revealed he cried when she played him Roy Orbison's 1962 song Crying.
+
+Fellow Bee Gees star Barry Gibb had also been singing to his brother to try to rouse him.
+
+Dwina Gibb told her local paper The Impartial Reporter, based in Enniskillen, Northern Ireland their children Robin John, Spencer and Melissa have been playing him music to try and bring him back to us.
+
+Facebook tributes
+She said thousands of people have been saying prayers for him every day, and thanked his fans for their support.
+
+In February Gibb said he had made a spectacular recovery from cancer but was later back in hospital for surgery.
+
+Gibb was too ill to attend last week's premiere of his latest work The Titanic Requiem, a classical piece composed with his son to commemorate the 100th anniversary of the ship's sinking.
+
+
+Dwina Gibb has thanked her husband Robin's fans for their good wishes
+He was due to sing Don't Cry Alone in person at Central Hall Westminster in London.
+
+The singer's website is down because of traffic volumes, with fans directed to his Facebook page, where messages of support can be left.
+
+The British-born singer had surgery on his bowel 18 months ago for an unrelated condition, but a tumour was discovered and he was diagnosed with cancer of the colon and later of the liver.
+
+It had been thought his cancer was in remission as early as last month.
+
+Robin Gibb's musical career began when he formed the Bee Gees with his brothers Barry and Maurice in 1958.
+
+The group is among the biggest-selling groups of all time with hits spanning six decades including Stayin' Alive, How Deep Is Your Love, Massachusetts, and Words.
+
+Their soundtrack to the film Saturday Night Fever was one of the best-selling albums of the 1970s and the band have won seven Grammy Awards.
+
+Robin's twin brother Maurice Gibb died in 2003 aged 53 due to complications from a twisted intestine.
+
+His younger brother Andy, who had a successful solo career, died of a heart ailment in 1988, aged 30.
+
+Gibb last performed on stage at the London Palladium in February, supporting injured servicemen and women in a charity concert.">Bee Gees</a>
+
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" id="create-new-translation">Create new translation</a>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>

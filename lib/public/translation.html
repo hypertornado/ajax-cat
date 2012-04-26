@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <script src="/jquery.js"></script>
+	<script src="/bootstrap.js"></script>
+	<script src="/ajax-cat.js"></script>
+	<script src="/translation.js"></script>
+	
+	
+	<title>AJAX-CAT</title>
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">AJAX-CAT</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="/">Back to list of documents</a></li>
+              <li><a href="#about" id="preview">Preview</a></li>
+            </ul>
+            <p class="pull-right">
+              <button class="btn btn-info" id="save">
+                Save into browser
+              </button>
+            </p>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <h1>Translations</h1>
+
+        <table class=" table-bordered table-condensed" id="translation">
+        	<tr>
+            <td width="50%" id="source-top"></td>
+            <td width="50%" id="target-top"></td>
+          </tr>
+        	<tr>
+            <td colspan="2" id="current-sentence">
+              <div id="source-sentence"></div>
+              <input id="target-sentence" spellcheck="false">
+              <div id="suggestions-container"></div>
+              <div id="translation-table-container"></div> 
+            </td>
+          </tr>
+        	<tr>
+            <td id="source-bottom"></td>
+            <td id="target-bottom"></td>
+          </tr>
+        </table>
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>Created by Ondřej Odcházel & Ondřej Bojar - <a href="http://ufal.mff.cuni.cz/">Institute of Formal and Applied Linguistics</a>, 
+Charles University in Prague<br>
+Supported by the grant:
+FP7-ICT-2007-3-231720 (EuroMatrix Plus)</p>
+      </footer>
+
+    </div>
+
+
+<div class="modal" id="translation-preview-modal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Translation preview</h3>
+  </div>
+  <div class="modal-body">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#source" data-toggle="tab">Source</a></li>
+      <li><a href="#target" data-toggle="tab">Target</a></li>
+    </ul>
+
+    <div id="myTab" class="tab-content">
+      <div class="tab-pane active" id="source"></div>
+      <div class="tab-pane" id="target"></div>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
+</html>

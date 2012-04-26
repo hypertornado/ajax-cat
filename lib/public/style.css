@@ -1,0 +1,97 @@
+
+
+.ac-element {
+	cursor: pointer;
+}
+
+.ac-element:hover {
+	color: black;
+}
+
+#translation {
+	width: 400px;
+}
+
+#current-sentence {
+}
+
+#target-sentence {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+#source-sentence {
+	color: white;
+	font-size: 1.4em;
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+}
+
+#current-sentence {
+	background-color: #64a8d1;
+}
+
+#translation-table-container {
+	width: 1100px;
+	overflow: auto;
+}
+
+.translation-table {
+	border: none !important;
+	margin-top: 10px;
+}
+
+.translation-table td {
+	padding: 3px 4px 0px 2px;
+}
+
+.ac-empty {
+	border: none !important;
+}
+
+.ac-word {
+	border: none !important;
+	padding: 0px;
+}
+
+.ac-source {
+	background-color: white;
+	text-align: center;
+	cursor: pointer;
+}
+
+.ac-word div {
+	text-align: center;
+	background-color: white;
+	white-space: nowrap;
+	border-radius: 2px;
+	margin: 0px;
+	padding: 0px 2px 0px 2px;
+	width: 100%;
+	cursor: pointer;
+}
+
+.ac-selected {
+	background-color: #0074CC;
+	color: white;
+
+}
+
+.ac-suggestion {
+	min-height: 20px;
+	color: #777;
+}
+
+.ac-suggestion span {
+	font-weight: bold;
+}
+
+.suggestion-enabled{
+	background-color: white;
+}
+
+.suggestion-active{
+	background-color: #0074CC;
+	color: white;
+}
