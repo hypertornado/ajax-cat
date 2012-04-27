@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "ajax-cat.gemspec",
     "lib/.DS_Store",
     "lib/ajax-cat.rb",
+    "lib/ajax-cat/MosesPair.rb",
     "lib/public/AjaxCatList.coffee",
     "lib/public/AjaxCatTranslation.coffee",
     "lib/public/Suggestions.coffee",
