@@ -6,6 +6,7 @@ module AjaxCat
 	  def test_moses_pair
 	  	pair = MosesPair.new
 	  	assert_equal(pair.class, MosesPair, "right class")
+	  	assert_equal(pair.class, MosesPair, "right class")
 	  end
 	end
 

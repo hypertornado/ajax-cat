@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ondrej Odchazel"]
-  s.date = "2012-04-27"
+  s.date = "2012-04-28"
   s.description = "computer-aided translation backed by machine translation"
   s.email = "odchazel@gmail.com"
   s.extra_rdoc_files = [
@@ -44,8 +44,8 @@ Gem::Specification.new do |s|
     "lib/public/style.css",
     "lib/public/translation.html",
     "lib/public/translation.js",
+    "test/fixtures/translation_table",
     "test/helper.rb",
-    "test/unit/request/test_raw_request.rb",
     "test/unit/test_moses_pair.rb"
   ]
   s.homepage = "http://github.com/hypertornado/ajax-cat"
