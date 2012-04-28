@@ -2,6 +2,7 @@
 
 require 'sinatra.rb'
 require 'ajax-cat/moses_pair.rb'
+require 'ajax-cat/request/raw.rb'
 
 get '/' do
   redirect '/index.html'

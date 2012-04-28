@@ -4,9 +4,8 @@ module AjaxCat
 
 	module Request
 		class TestRawRequest < Test::Unit::TestCase
-		  def test_raw_request
-		  	pair = AjaxCat::Request::Raw.new
-		  	assert_equal(pair.class, Raw, "right class")
+		  def parse_order
+		  	line = File.readlines(__FILE__ + "translation_table")[0].chop
 		  end
 		end
 

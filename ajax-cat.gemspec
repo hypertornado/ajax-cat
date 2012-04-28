@@ -27,7 +27,8 @@ Gem::Specification.new do |s|
     "ajax-cat.gemspec",
     "lib/.DS_Store",
     "lib/ajax-cat.rb",
-    "lib/ajax-cat/MosesPair.rb",
+    "lib/ajax-cat/moses_pair.rb",
+    "lib/ajax-cat/request/raw.rb",
     "lib/public/AjaxCatList.coffee",
     "lib/public/AjaxCatTranslation.coffee",
     "lib/public/Suggestions.coffee",
@@ -44,7 +45,8 @@ Gem::Specification.new do |s|
     "lib/public/translation.html",
     "lib/public/translation.js",
     "test/helper.rb",
-    "test/test_ajax-cat.rb"
+    "test/unit/request/test_raw_request.rb",
+    "test/unit/test_moses_pair.rb"
   ]
   s.homepage = "http://github.com/hypertornado/ajax-cat"
   s.licenses = ["MIT"]
