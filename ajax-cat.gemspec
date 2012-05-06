@@ -46,7 +46,9 @@ Gem::Specification.new do |s|
     "lib/public/translation.js",
     "test/fixtures/translation_table",
     "test/helper.rb",
-    "test/unit/test_moses_pair.rb"
+    "test/unit/.DS_Store",
+    "test/unit/test_moses_pair.rb",
+    "test/unit/test_raw_request.rb"
   ]
   s.homepage = "http://github.com/hypertornado/ajax-cat"
   s.licenses = ["MIT"]

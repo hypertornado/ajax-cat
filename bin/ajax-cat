@@ -1,0 +1,15 @@
+#!/bin/ruby
+
+require_relative('../lib/ajax-cat.rb')
+
+case ARGV.first
+when "start"
+  puts "Starting ajax-cat server..."
+  AjaxCat::Starter.start
+when "stop"
+  puts "Stopping ajax-cat server."
+  AjaxCat::Starter.stop
+  puts "Server stopped."
+else
+  puts "Unknown command."
+end
