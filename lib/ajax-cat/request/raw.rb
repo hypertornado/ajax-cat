@@ -6,11 +6,13 @@ module AjaxCat
 
 		class Raw
 
-			attr_accessor :sentence
+			attr_accessor :sentence, :lock
 
 			def initialize(sentence)
 				@sentence = sentence
 				@lines = []
+				@lock = Mutex.new
+				#@lock.lock
 			end
 
 			def result

@@ -4,13 +4,13 @@ module AjaxCat
   class MosesPair
 
   	def initialize(name, moses_path, moses_ini_path)
-      @results
+      @request_queue = []
+      @current_position = -1
   		@name = name
+      @lock = Mutex.new
   		Dir.chdir(Dir.home)
       system("rm #{name}_fifo.fifo; mkfifo #{name}_fifo.fifo")
-      #t2 = Thread.new do
-        @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo", "w")
-  		#end
+      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo", "w")
       t1 = Thread.new{reader()}
   	end
 
@@ -20,21 +20,39 @@ module AjaxCat
   	end
 
     def process_request(request)
-      @current_request = request
-      process_string(request.sentence)
-      "CCC"
+      @lock.synchronize do
+        request.lock.lock
+        @request_queue.push(request)
+        process_string(request.sentence)
+      end
+      #while request.lock.locked?
+      while request.result.length == 0 do
+        sleep 0.001
+      end
+      request.result
     end
 
   	def reader
-  		puts "IN READER"
-
       f = open "#{@name}_fifo.fifo", File::RDWR|File::NONBLOCK
 
       while l = f.readline
+        position = Request::Raw.parse_position(l)
+        if position != @current_position
+          if (position % 2 == 0)
+            @current_request = @request_queue.shift
+          else
+            if @current_request
+              puts "UNLOCKING"
+              @current_request.lock.unlock
+            end
+            @current_request = nil
+          end
+        end
+        @current_request.process_line(l) if @current_request
+        #@current_request.lock.unlock
         puts l
       end
 
-      puts "END READER"
   	end
 
 

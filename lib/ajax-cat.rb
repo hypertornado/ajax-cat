@@ -3,6 +3,7 @@
 #require 'sinatra.rb'
 require 'sinatra/base'
 require 'json'
+require 'thread'
 require_relative 'ajax-cat/moses_pair.rb'
 require_relative 'ajax-cat/request/raw.rb'
 require_relative 'ajax-cat/request/simple.rb'
