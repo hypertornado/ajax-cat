@@ -11,8 +11,8 @@ module AjaxCat
 
 	  	should "log message" do	  
 	  		res = @logger.compose_message("message")		
-	  		puts "COMPOSE #{res}"
-	  		assert (res =~ /prefix: message/), "not match"
+	  		assert (res =~ /prefix/), "not match prefix"
+	  		assert (res =~ /message/), "not match message"
 	  	end
 
 	  end

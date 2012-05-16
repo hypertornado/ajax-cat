@@ -1,12 +1,11 @@
-
-
 module AjaxCat
   class MosesPair
 
   	def initialize(name, moses_path, moses_ini_path)
-      @request_queue = []
-  		@name = name
       @logger = Logger.new(name)
+      @logger.log "starting pair".green
+      @request_queue = []
+      @name = name
       @queue_lock = Mutex.new
       Dir.chdir(Dir.home + "/.ajax-cat")
   		@fifo_path = "#{Dir.home}/.ajax-cat/#{name}_fifo.fifo"
@@ -14,7 +13,7 @@ module AjaxCat
       t1 = Thread.new{reader()}
       @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{@fifo_path} 2>/dev/null", "w")
       process_request(Request::Raw.new("start_test"))
-      @logger.log "pair started"
+      @logger.log "pair started".green
     end
 
   	def process_string(str)
@@ -23,6 +22,7 @@ module AjaxCat
   	end
 
     def process_request(request)
+      @logger.log "processing #{request.class.name} '#{request.sentence.blue}'"
       @queue_lock.synchronize do
         request.lock.lock
         @request_queue.push(request)
@@ -32,6 +32,7 @@ module AjaxCat
       until request.processed 
         sleep 0.001
       end
+      @logger.log "processed #{request.class.name} '#{request.sentence.blue}'"
       request.result
     end
 

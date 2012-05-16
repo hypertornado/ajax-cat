@@ -1,23 +1,30 @@
-
-
 module AjaxCat
 	class Logger
 
-		def initialize(prefix)
+		@@print = true
+
+		def self.print_log(val)
+			@@print = val
+		end
+
+		def initialize(prefix = false)
 			@prefix = prefix
 		end
 
 		def log(message)
+			return unless @@print
 			puts compose_message(message)
 		end
 
 		def compose_message(message)
 			t = Time.now
-			ret = t.strftime("%Y-%d-%m %H:%M:%S") + " "
+			milliseconds = (t.to_f * 1000 % 1000).to_i
+			ret = (t.strftime("%Y-%d-%m %H:%M:%S.#{milliseconds}") + " ")
+			(3 - milliseconds.to_s.length).times {ret += " "}
 			if @prefix
-				ret = "#{ret}#{@prefix}: #{message}"
+				ret = "#{ret}#{@prefix.red}: #{message}"
 			else
-				ret = "#{ret} #{message}"
+				ret = "#{ret}#{message.green}"
 			end
 			ret
 		end

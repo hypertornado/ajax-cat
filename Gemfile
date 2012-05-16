@@ -7,7 +7,9 @@ source "http://rubygems.org"
 # Include everything needed to run rake, tests, features, etc.
 
 gem 'sinatra', "~> 1.3.2"
-gem "thin"
+gem 'colorize', "~> 0.5.8"
+gem "thin", "~> 1.3.1"
+gem "thor", "~> 0.15.2"
 
 group :development do
   gem "rdoc", "~> 3.12"
