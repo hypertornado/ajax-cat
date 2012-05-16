@@ -4,8 +4,7 @@ require_relative('../lib/ajax-cat.rb')
 
 case ARGV.first
 when "start"
-  puts "Starting ajax-cat server..."
-  AjaxCat::Starter.start
+  AjaxCat::Starter.start(8585, true)
 when "stop"
   puts "Stopping ajax-cat server."
   AjaxCat::Starter.stop

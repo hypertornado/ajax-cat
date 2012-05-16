@@ -6,12 +6,16 @@ module AjaxCat
   	def initialize(name, moses_path, moses_ini_path)
       @request_queue = []
   		@name = name
+      @logger = Logger.new(name)
       @queue_lock = Mutex.new
-  		Dir.chdir(Dir.home + "/.ajax-cat")
-      system("rm #{name}_fifo.fifo; mkfifo #{name}_fifo.fifo")
-      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo 3>/dev/null", "w")
+      Dir.chdir(Dir.home + "/.ajax-cat")
+  		@fifo_path = "#{Dir.home}/.ajax-cat/#{name}_fifo.fifo"
+      system("rm #{@fifo_path}; mkfifo #{@fifo_path}")
       t1 = Thread.new{reader()}
-  	end
+      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{@fifo_path} 2>/dev/null", "w")
+      process_request(Request::Raw.new("start_test"))
+      @logger.log "pair started"
+    end
 
   	def process_string(str)
   		@pipe.write("#{str}\nxxxxnonsensestringxxx\n")
@@ -32,7 +36,7 @@ module AjaxCat
     end
 
   	def reader
-      f = open "#{@name}_fifo.fifo", File::RDWR|File::NONBLOCK
+      f = open @fifo_path, File::RDWR|File::NONBLOCK
       last_position = -1
 
       while l = f.readline

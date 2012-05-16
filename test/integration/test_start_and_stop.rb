@@ -1,7 +1,5 @@
 require 'helper'
 
-
-#include Test::Integration
 module AjaxCat
 
 	class TestStartAndStop < Test::Unit::TestCase
