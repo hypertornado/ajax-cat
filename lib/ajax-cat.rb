@@ -28,7 +28,6 @@ module AjaxCat
       Dir.mkdir('.ajax-cat') unless Dir.exist?('.ajax-cat')
       builder = Rack::Builder.new do
         map('/'){ run AjaxCatServer }
-        logger.log "started server on port #{port}"
       end
       logger.log "starting server on port #{port}"
       Rack::Handler::Thin.run builder, :Port => port
