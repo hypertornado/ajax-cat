@@ -5,13 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = "ajax-cat"
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ondrej Odchazel"]
-  s.date = "2012-04-28"
+  s.date = "2012-05-16"
   s.description = "computer-aided translation backed by machine translation"
   s.email = "odchazel@gmail.com"
+  s.executables = ["ajax-cat"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -25,30 +26,40 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "ajax-cat.gemspec",
+    "bin/ajax-cat",
     "lib/.DS_Store",
     "lib/ajax-cat.rb",
+    "lib/ajax-cat/ajax_cat_server.rb",
+    "lib/ajax-cat/logger.rb",
     "lib/ajax-cat/moses_pair.rb",
+    "lib/ajax-cat/public/AjaxCatList.coffee",
+    "lib/ajax-cat/public/AjaxCatTranslation.coffee",
+    "lib/ajax-cat/public/Suggestions.coffee",
+    "lib/ajax-cat/public/TranslationTable.coffee",
+    "lib/ajax-cat/public/Utils.coffee",
+    "lib/ajax-cat/public/ajax-cat.coffee",
+    "lib/ajax-cat/public/ajax-cat.js",
+    "lib/ajax-cat/public/bootstrap.css",
+    "lib/ajax-cat/public/bootstrap.js",
+    "lib/ajax-cat/public/index.html",
+    "lib/ajax-cat/public/index.js",
+    "lib/ajax-cat/public/jquery.js",
+    "lib/ajax-cat/public/style.css",
+    "lib/ajax-cat/public/translation.html",
+    "lib/ajax-cat/public/translation.js",
     "lib/ajax-cat/request/raw.rb",
-    "lib/public/AjaxCatList.coffee",
-    "lib/public/AjaxCatTranslation.coffee",
-    "lib/public/Suggestions.coffee",
-    "lib/public/TranslationTable.coffee",
-    "lib/public/Utils.coffee",
-    "lib/public/ajax-cat.coffee",
-    "lib/public/ajax-cat.js",
-    "lib/public/bootstrap.css",
-    "lib/public/bootstrap.js",
-    "lib/public/index.html",
-    "lib/public/index.js",
-    "lib/public/jquery.js",
-    "lib/public/style.css",
-    "lib/public/translation.html",
-    "lib/public/translation.js",
+    "lib/ajax-cat/request/simple.rb",
+    "test/fixtures/europarl.srilm.gz",
+    "test/fixtures/moses.ini",
+    "test/fixtures/phrase-table",
     "test/fixtures/translation_table",
     "test/helper.rb",
+    "test/integration/test_start_and_stop.rb",
     "test/unit/.DS_Store",
+    "test/unit/test_logger.rb",
     "test/unit/test_moses_pair.rb",
-    "test/unit/test_raw_request.rb"
+    "test/unit/test_raw_request.rb",
+    "test/unit/test_simple_request.rb"
   ]
   s.homepage = "http://github.com/hypertornado/ajax-cat"
   s.licenses = ["MIT"]
@@ -60,21 +71,36 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<sinatra>, ["~> 1.3.2"])
+      s.add_runtime_dependency(%q<colorize>, ["~> 0.5.8"])
+      s.add_runtime_dependency(%q<thin>, ["~> 1.3.1"])
+      s.add_runtime_dependency(%q<thor>, ["~> 0.15.2"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
-      s.add_development_dependency(%q<sinatra>, [">= 0"])
+      s.add_development_dependency(%q<shoulda>, ["~> 3.0.1"])
+      s.add_development_dependency(%q<curb>, ["~> 0.8.0"])
     else
+      s.add_dependency(%q<sinatra>, ["~> 1.3.2"])
+      s.add_dependency(%q<colorize>, ["~> 0.5.8"])
+      s.add_dependency(%q<thin>, ["~> 1.3.1"])
+      s.add_dependency(%q<thor>, ["~> 0.15.2"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
-      s.add_dependency(%q<sinatra>, [">= 0"])
+      s.add_dependency(%q<shoulda>, ["~> 3.0.1"])
+      s.add_dependency(%q<curb>, ["~> 0.8.0"])
     end
   else
+    s.add_dependency(%q<sinatra>, ["~> 1.3.2"])
+    s.add_dependency(%q<colorize>, ["~> 0.5.8"])
+    s.add_dependency(%q<thin>, ["~> 1.3.1"])
+    s.add_dependency(%q<thor>, ["~> 0.15.2"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
-    s.add_dependency(%q<sinatra>, [">= 0"])
+    s.add_dependency(%q<shoulda>, ["~> 3.0.1"])
+    s.add_dependency(%q<curb>, ["~> 0.8.0"])
   end
 end
 
