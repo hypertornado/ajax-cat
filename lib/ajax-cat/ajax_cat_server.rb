@@ -3,6 +3,10 @@ module AjaxCat
 
 	class AjaxCatServer < Sinatra::Base
 
+		configure :production, :development do
+    	disable :logging
+  	end
+
 		get '/' do 
 			"hello world"		
 		end

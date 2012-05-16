@@ -9,7 +9,7 @@ module AjaxCat
       @queue_lock = Mutex.new
   		Dir.chdir(Dir.home + "/.ajax-cat")
       system("rm #{name}_fifo.fifo; mkfifo #{name}_fifo.fifo")
-      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo 2>/dev/null", "w")
+      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo 3>/dev/null", "w")
       t1 = Thread.new{reader()}
   	end
 
