@@ -6,7 +6,8 @@ module AjaxCat
 
 		class Simple < Raw
 
-			def initialize
+			def initialize(sentence)
+				super(sentence)
 				@best_translation = false
 			end
 

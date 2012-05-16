@@ -23,7 +23,7 @@ module AjaxCat
 
 		  def test_process_line_and_get_result
 
-		  	request = Raw.new;
+		  	request = Raw.new("");
 		  	File.new(File.dirname(__FILE__) + "/../fixtures/translation_table").each do |line|
 		  		request.process_line(line)
 		  	end

@@ -5,12 +5,11 @@ module AjaxCat
 
   	def initialize(name, moses_path, moses_ini_path)
       @request_queue = []
-      @current_position = -1
   		@name = name
-      @lock = Mutex.new
-  		Dir.chdir(Dir.home)
+      @queue_lock = Mutex.new
+  		Dir.chdir(Dir.home + "/.ajax-cat")
       system("rm #{name}_fifo.fifo; mkfifo #{name}_fifo.fifo")
-      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo", "w")
+      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{name}_fifo.fifo 2>/dev/null", "w")
       t1 = Thread.new{reader()}
   	end
 
@@ -20,13 +19,13 @@ module AjaxCat
   	end
 
     def process_request(request)
-      @lock.synchronize do
+      @queue_lock.synchronize do
         request.lock.lock
         @request_queue.push(request)
         process_string(request.sentence)
       end
-      #while request.lock.locked?
-      while request.result.length == 0 do
+      #TODO: avoid active waiting somehow
+      until request.processed 
         sleep 0.001
       end
       request.result
@@ -34,25 +33,23 @@ module AjaxCat
 
   	def reader
       f = open "#{@name}_fifo.fifo", File::RDWR|File::NONBLOCK
+      last_position = -1
 
       while l = f.readline
         position = Request::Raw.parse_position(l)
-        if position != @current_position
-          if (position % 2 == 0)
-            @current_request = @request_queue.shift
-          else
-            if @current_request
-              puts "UNLOCKING"
-              @current_request.lock.unlock
-            end
+        if position != last_position
+          if (last_position % 2 == 0)
+            @current_request.processed = true
             @current_request = nil
+          else
+            @queue_lock.synchronize do
+              @current_request = @request_queue.shift
+            end
           end
         end
         @current_request.process_line(l) if @current_request
-        #@current_request.lock.unlock
-        puts l
+        last_position = position
       end
-
   	end
 
 

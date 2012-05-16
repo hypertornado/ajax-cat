@@ -13,7 +13,6 @@ require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "ajax-cat"
   gem.homepage = "http://github.com/hypertornado/ajax-cat"
   gem.license = "MIT"
@@ -21,16 +20,21 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{computer-aided translation backed by machine translation}
   gem.email = "odchazel@gmail.com"
   gem.authors = ["Ondrej Odchazel"]
-  # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  #test.pattern = 'test/**/test_*.rb'
-  test.test_files = FileList['test/unit/test_*.rb']
-  test.verbose = true
+namespace :test do
+  Rake::TestTask.new(:unit) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList['test/unit/test_*.rb','test/integration/*.rb']
+    test.verbose = false
+  end
+  Rake::TestTask.new(:integration) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList['test/integration/*.rb']
+    test.verbose = false
+  end
 end
 
 task :default => :test

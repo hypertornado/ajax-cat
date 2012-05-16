@@ -8,7 +8,7 @@ module AjaxCat
 		end
 
 		get '/api/raw' do
-			req = Request::Raw.new("das ist")
+			req = Request::Raw.new(params[:q])
 			Starter.pair.process_request(req)
 		end
 
