@@ -7,9 +7,8 @@ module AjaxCat
       @request_queue = []
       @name = name
       @queue_lock = Mutex.new
-      Dir.chdir(Dir.home + "/.ajax-cat")
   		@fifo_path = "#{Dir.home}/.ajax-cat/#{name}_fifo.fifo"
-      system("rm #{@fifo_path}; mkfifo #{@fifo_path}")
+      system("rm -f #{@fifo_path}; mkfifo #{@fifo_path}")
       t1 = Thread.new{reader()}
       @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct > #{@fifo_path} 2>/dev/null", "w")
       process_request(Request::Raw.new("start_test"))

@@ -16,6 +16,8 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'ajax-cat'
 
+AjaxCat::Logger.print_log(false)
+
 @moses_ini = <<-END
 #########################
 ### MOSES CONFIG FILE ###

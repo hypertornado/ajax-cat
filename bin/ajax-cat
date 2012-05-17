@@ -4,11 +4,17 @@ require_relative('../lib/ajax-cat.rb')
 
 case ARGV.first
 when "start"
-  AjaxCat::Starter.start(8585, true)
-when "stop"
-  puts "Stopping ajax-cat server."
-  AjaxCat::Starter.stop
-  puts "Server stopped."
+  AjaxCat::Runner.new(8585)
+when "-v", "--version"
+  puts VERSION
+  exit 0
+when "-h", "--help"
+	puts "no help yet, look at https://github.com/hypertornado/ajax-cat"
+	exit 0
+when "example"
+	puts AjaxCat::Runner.example
+	exit 0
 else
   puts "Unknown command."
+  exit 0
 end

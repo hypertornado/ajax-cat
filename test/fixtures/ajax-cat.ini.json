@@ -1,0 +1,14 @@
+{
+  "pairs": [
+    {
+      "name": "de-en",
+      "moses_path": "moses",
+      "moses_ini_path": "moses.ini"
+    },
+    {
+      "name": "de-en-2",
+      "moses_path": "moses",
+      "moses_ini_path": "moses.ini"
+    }
+	]
+}
