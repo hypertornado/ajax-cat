@@ -1,4 +1,6 @@
 
+#TODO create .ajax-cat
+
 module AjaxCat
 
 	class AjaxCatServer < Sinatra::Base

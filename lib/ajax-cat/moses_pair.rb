@@ -10,7 +10,7 @@ module AjaxCat
   		@fifo_path = "#{Dir.home}/.ajax-cat/#{name}_fifo.fifo"
       system("rm -f #{@fifo_path}; mkfifo #{@fifo_path}")
       t1 = Thread.new{reader()}
-      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct -include-alignment-in-n-best true -continue-partial-translation true > #{@fifo_path} 2>/dev/null", "w")
+      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct -include-alignment-in-n-best true -continue-partial-translation true > #{@fifo_path} 3>/dev/null", "w")
       process_request(Request::Raw.new("start_test"))
       @logger.log "pair started".green
     end
