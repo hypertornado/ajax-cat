@@ -48,6 +48,7 @@ module AjaxCat
     end
 
     def self.example
+      self.create_sample_moses_ini()
       ret = <<-END.gsub(/^ {8}/, '')
         {
           "port": #{DEFAULT_PORT},
