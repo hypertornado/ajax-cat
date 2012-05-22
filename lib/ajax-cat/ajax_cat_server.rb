@@ -1,9 +1,11 @@
-
-#TODO create .ajax-cat
-
 module AjaxCat
 
 	class AjaxCatServer < Sinatra::Base
+
+		before do
+			puts request.inspect
+			puts "====="
+		end
 
 		get '/' do 
 			redirect "/index.html"

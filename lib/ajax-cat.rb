@@ -29,6 +29,7 @@ module AjaxCat
   	def initialize(port = DEFAULT_PORT, silent = true)
       logger = Logger.new
       logger.log "starting ajax-cat"
+      Thin::Logging.silent = false
       #Thin::Logging.silent = silent
       system("mkdir #{Dir.home}/.ajax-cat 2>/dev/null")
       @settings = JSON.parse(File.read("ajax-cat.ini.json"))
@@ -41,7 +42,7 @@ module AjaxCat
       end
       logger.log "starting server on port #{port}"
       @server = builder
-      Rack::Handler::Thin.run builder, :Port => port
+      Rack::Handler::Thin.run builder, :Port => port, :Logging => true
       logger.log "ajax-cat server shutted down"
     end
 
