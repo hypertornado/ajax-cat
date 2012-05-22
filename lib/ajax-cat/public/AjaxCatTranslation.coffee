@@ -56,7 +56,7 @@ class AjaxCatTranslation
         $.ajax "/admin/save_experiment"
           data:
             log: JSON.stringify(@doc)
-            type: "POST"
+          type: "post"
           success: =>
             alert "Experiment saved."
             window.location = "/"
@@ -69,6 +69,7 @@ class AjaxCatTranslation
     @log()
 
   log: (type = false, param = false) =>
+    return unless @doc.task_id
     new_log = (
       time: Date.now()
       target: $("#target-sentence").val()
