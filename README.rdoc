@@ -1,6 +1,13 @@
 = ajax-cat
 
-Description goes here.
+Ajax-cat is a web server for computer-aided translation build around Moses SMT system.
+
+== Installation
+* Requirements: Moses, Ruby (version at least 1.9), SQLite
+* Then simply <code>gem install ajax-cat</code>
+* Generate sample ini file with <code>ajax-cat exmple</code>
+* Change path in moses in your <code>ajax-cat.ini.json</code> file
+* Run server with <code>ajax-cat start</code>
 
 == Contributing to ajax-cat
  
