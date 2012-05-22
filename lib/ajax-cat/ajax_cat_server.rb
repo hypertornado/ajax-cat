@@ -26,6 +26,8 @@ module AjaxCat
 		get '/api/suggestion' do
 			req = Request::Suggestion.new(params[:q], params[:covered], params[:translated])
 			halt 404 unless Runner.pairs.list.member?(params[:pair])
+			#TODO: better response
+			halt 404 unless params[:covered].include?("0")
 			Runner.pairs.process_request(req, params[:pair]).to_json
 		end
 
