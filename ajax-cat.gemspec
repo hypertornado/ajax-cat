@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "ajax-cat"
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ondrej Odchazel"]
@@ -88,7 +88,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<colorize>, ["~> 0.5.8"])
       s.add_runtime_dependency(%q<thin>, ["~> 1.3.1"])
       s.add_runtime_dependency(%q<thor>, ["~> 0.15.2"])
-      s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.3"])
+      s.add_runtime_dependency(%q<sqlite3>, ["~> 1.3.3"])
       s.add_runtime_dependency(%q<activerecord>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -100,7 +100,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<colorize>, ["~> 0.5.8"])
       s.add_dependency(%q<thin>, ["~> 1.3.1"])
       s.add_dependency(%q<thor>, ["~> 0.15.2"])
-      s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.3"])
+      s.add_dependency(%q<sqlite3>, ["~> 1.3.3"])
       s.add_dependency(%q<activerecord>, [">= 0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -113,7 +113,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<colorize>, ["~> 0.5.8"])
     s.add_dependency(%q<thin>, ["~> 1.3.1"])
     s.add_dependency(%q<thor>, ["~> 0.15.2"])
-    s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.3"])
+    s.add_dependency(%q<sqlite3>, ["~> 1.3.3"])
     s.add_dependency(%q<activerecord>, [">= 0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
