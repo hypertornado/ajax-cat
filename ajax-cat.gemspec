@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ajax-cat"
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ondrej Odchazel"]
-  s.date = "2012-05-16"
+  s.date = "2012-05-22"
   s.description = "computer-aided translation backed by machine translation"
   s.email = "odchazel@gmail.com"
   s.executables = ["ajax-cat"]
@@ -30,8 +30,10 @@ Gem::Specification.new do |s|
     "lib/.DS_Store",
     "lib/ajax-cat.rb",
     "lib/ajax-cat/ajax_cat_server.rb",
+    "lib/ajax-cat/log.rb",
     "lib/ajax-cat/logger.rb",
     "lib/ajax-cat/moses_pair.rb",
+    "lib/ajax-cat/pairs.rb",
     "lib/ajax-cat/public/AjaxCatList.coffee",
     "lib/ajax-cat/public/AjaxCatTranslation.coffee",
     "lib/ajax-cat/public/Suggestions.coffee",
@@ -49,8 +51,16 @@ Gem::Specification.new do |s|
     "lib/ajax-cat/public/translation.js",
     "lib/ajax-cat/request/raw.rb",
     "lib/ajax-cat/request/simple.rb",
+    "lib/ajax-cat/request/suggestion.rb",
+    "lib/ajax-cat/request/table.rb",
+    "lib/ajax-cat/task.rb",
+    "lib/ajax-cat/views/admin.erb",
+    "lib/ajax-cat/views/experiment.erb",
+    "logs.db",
+    "test/fixtures/ajax-cat.ini.json",
     "test/fixtures/europarl.srilm.gz",
     "test/fixtures/moses.ini",
+    "test/fixtures/nbest.txt",
     "test/fixtures/phrase-table",
     "test/fixtures/translation_table",
     "test/helper.rb",
@@ -58,8 +68,11 @@ Gem::Specification.new do |s|
     "test/unit/.DS_Store",
     "test/unit/test_logger.rb",
     "test/unit/test_moses_pair.rb",
+    "test/unit/test_pairs.rb",
     "test/unit/test_raw_request.rb",
-    "test/unit/test_simple_request.rb"
+    "test/unit/test_simple_request.rb",
+    "test/unit/test_suggestion_request.rb",
+    "test/unit/test_table_request.rb"
   ]
   s.homepage = "http://github.com/hypertornado/ajax-cat"
   s.licenses = ["MIT"]
@@ -75,6 +88,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<colorize>, ["~> 0.5.8"])
       s.add_runtime_dependency(%q<thin>, ["~> 1.3.1"])
       s.add_runtime_dependency(%q<thor>, ["~> 0.15.2"])
+      s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.3"])
+      s.add_runtime_dependency(%q<activerecord>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
@@ -85,6 +100,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<colorize>, ["~> 0.5.8"])
       s.add_dependency(%q<thin>, ["~> 1.3.1"])
       s.add_dependency(%q<thor>, ["~> 0.15.2"])
+      s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.3"])
+      s.add_dependency(%q<activerecord>, [">= 0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
@@ -96,6 +113,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<colorize>, ["~> 0.5.8"])
     s.add_dependency(%q<thin>, ["~> 1.3.1"])
     s.add_dependency(%q<thor>, ["~> 0.15.2"])
+    s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.3"])
+    s.add_dependency(%q<activerecord>, [">= 0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
