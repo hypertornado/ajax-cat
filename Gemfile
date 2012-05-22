@@ -10,6 +10,8 @@ gem 'sinatra', "~> 1.3.2"
 gem 'colorize', "~> 0.5.8"
 gem "thin", "~> 1.3.1"
 gem "thor", "~> 0.15.2"
+gem "sqlite3-ruby", "~> 1.3.3"
+gem "activerecord"
 
 group :development do
   gem "rdoc", "~> 3.12"

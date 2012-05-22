@@ -1,21 +1,21 @@
 class AjaxCatTranslation
 
   cur_position: false
-  pair: "en-cs"
-  #host: "10.10.24.118"
-  host: "localhost"
 
   constructor: ->
-    @host = window.location.hostname
+    @now = Date.now()
+    $('#new-experiment-modal').hide()
+    $("#send-experiment").hide()
     @suggestions = new Suggestions(@)
     $('#translation-preview-modal').hide()
     $('#myTab').tab('show')
-    hash = window.location.hash.substr(1)
-    data = localStorage.getItem(hash)
+    @hash = window.location.hash.substr(1)
+    data = localStorage.getItem(@hash)
     unless data
       alert "No such document."
       return
     @doc = JSON.parse(data)
+    @prepare_test() if @doc.task_id
     @pair = @doc.pair
     $('h1').html("#{@doc.name} <small>#{@pair}</small>")
     $("title").html("#{@doc.name} - AJAX-CAT")
@@ -40,13 +40,61 @@ class AjaxCatTranslation
     @bind_events()
     @resize()
 
+  time: =>
+    sec = parseInt((Date.now() - @now) / 1000)
+    t = "time from start: #{parseInt(sec / 60)}:#{sec % 60}"
+    $("#time").html(t)
+    setTimeout(@time, 10)
+
+  prepare_test: =>
+    AjaxCatList.delete_document(@hash)
+    $("#save").hide()
+    $("#send-experiment").show()
+    $("#send-experiment").click(
+      =>
+        $("#send-experiment").hide()
+        $.ajax "/admin/save_experiment"
+          data:
+            log: JSON.stringify(@doc)
+            type: "POST"
+          success: =>
+            alert "Experiment saved."
+            window.location = "/"
+          error: =>
+            alert "Could not save experiment."
+    )
+    @doc.log = []
+    @time()
+    $("#log").append("<h2>Log</h2>")
+    @log()
+
+  log: (type = false, param = false) =>
+    new_log = (
+      time: Date.now()
+      target: $("#target-sentence").val()
+    )
+    new_log.type = type if type
+    new_log.param = param if param
+    @doc.log.push(new_log)
+    $("#log").append(JSON.stringify(new_log) + "<br>")
+
+
   resize: =>
     width = $(window).width()
     $("#translation-table-container").width(width - 60)
 
   bind_events: =>
+    $("#target-sentence").on('keyup',
+      =>
+        @log()
+    )
+    $("#target-sentence").on('click',
+      =>
+        @log()
+    )
     $("#target-sentence").on('keydown'
       (event) =>
+        @log()
         switch event.which
           when 13 #enter
             @suggestions.take_suggestion()
@@ -108,7 +156,7 @@ class AjaxCatTranslation
       @suggestions.clear()
       return
     $("#translation-table-container").text("")
-    $.ajax "http://"+@host+":8888/table"
+    $.ajax "/api/table"
       data:
         pair: @pair
         q: sentence

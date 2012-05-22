@@ -2,6 +2,10 @@
 coverage
 coverage.data
 
+#ajax-cat config
+ajax-cat.ini.json
+bin/ajax-cat.ini.json
+
 # rdoc generated
 rdoc
 

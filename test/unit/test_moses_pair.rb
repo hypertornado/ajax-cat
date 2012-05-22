@@ -9,7 +9,7 @@ module AjaxCat
 	  	assert_equal(@pair.class, MosesPair, "right class")
 	  	request = Request::Raw.new("das ist")
 	  	result = @pair.process_request(request)
-	  	assert_equal(616, result.size)
+	  	assert_equal(724, result.size)
 	  end
 	end
 

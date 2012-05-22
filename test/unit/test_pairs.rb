@@ -29,7 +29,7 @@ module AjaxCat
 	  		pairs = Pairs.new(@settings)
 
 	  		result = pairs.process_request(Request::Raw.new("das ist"), @pair_name)
-	  		assert_equal(616, result.size)
+	  		assert_equal(724, result.size)
 	  		assert_equal(['de-en','de-en-2'], pairs.list)
 	  	end
 

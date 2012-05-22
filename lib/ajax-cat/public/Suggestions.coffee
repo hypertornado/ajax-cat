@@ -33,7 +33,7 @@ class Suggestions
     sentence = Utils.tokenize(sentence)
     translated = Utils.tokenize($("#source-target").text())
     covered = @translation.table.covered_vector()
-    $.ajax "http://"+@translation.host+":8888/suggestion"
+    $.ajax "/api/suggestion"
       data:
         pair: @translation.pair
         q: Utils.tokenize(sentence)

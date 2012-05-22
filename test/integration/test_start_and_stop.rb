@@ -34,7 +34,16 @@ module AjaxCat
 
 	  		result = Curl::Easy.perform("http://localhost:#{@port}/api/raw?q=das+ist&pair=de-en")
 	  		assert_equal 200, result.response_code
-	  		assert_equal(616, result.body_str.size)
+	  		assert_equal(724, result.body_str.size)
+	  	
+	  		result = Curl::Easy.perform("http://localhost:#{@port}/api/table?q=das+ist&pair=de-en")
+	  		assert_equal 200, result.response_code
+
+	  		result = Curl::Easy.perform("http://localhost:#{@port}/api/table?q=das+ist")
+	  		assert_equal 404, result.response_code
+
+	  		result = Curl::Easy.perform("http://localhost:#{@port}/api/suggestion?q=das+ist+ein&pair=de-en&covered=100&translated=tohle")
+	  		assert_equal 200, result.response_code
 	  	end
 
 	  	teardown do

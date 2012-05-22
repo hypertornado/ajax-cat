@@ -2,13 +2,14 @@ class TranslationTable
 
   constructor: (@translation, data) ->
     @data = JSON.parse(data)
+    console.log @data
 
   get_table: =>
     ret = $("<table>"
       class: 'translation-table'
     )
     ret.append(@get_header())
-    for row in @data.target
+    for row in @data.table
       ret.append(@get_row(row))
     return ret
 
@@ -36,15 +37,15 @@ class TranslationTable
     ret = $("<tr>")
     i = 0
     for word in row
-      len = parseInt(word.s)
-      if word.empty
-        ret.append("<td colspan='#{word.s}' class='ac-empty'></td>")
+      len = parseInt(word.w)
+      if !word.str
+        ret.append("<td colspan='#{len}' class='ac-empty'></td>")
       else
-        cell = $("<td colspan='#{word.s}' class='ac-word'></td>")
+        cell = $("<td colspan='#{len}' class='ac-word'></td>")
         content = $("<div>"
           'data-position-from': i
           'data-position-to': (i + len - 1)
-          html: word.t
+          html: word.str
           click: (event) =>
             i = parseInt($(event.currentTarget).data('position-from'))
             while i <= parseInt($(event.currentTarget).data('position-to'))

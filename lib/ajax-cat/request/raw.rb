@@ -13,7 +13,10 @@ module AjaxCat
 				@lines = []
 				@lock = Mutex.new
 				@processed = false
-				#@lock.lock
+			end
+
+			def prepare_moses_request
+				@sentence
 			end
 
 			def result
@@ -26,6 +29,10 @@ module AjaxCat
 
 			def Raw.parse_position(line)
 				Integer(line.split(" ||| ").first)
+			end
+
+			def tokenize(str)
+				str.strip.split(/[\t\n ]+/)
 			end
 
 		end

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <script src="/jquery.js"></script>
+	<script src="/bootstrap.js"></script>
+	<script src="/ajax-cat.js"></script>
+	
+	
+	<title>AJAX-CAT | admin</title>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">AJAX-CAT | admin</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <h1>Experiments</h1>
+
+        <table class="table table-bordered table-striped table-condensed" id="translation-list">
+        	<tr><th>#</th><th>Pair</th><th>Sentence</th><th></th><th></th></tr>
+        	<% Task.all.each do |task| %>
+        		<tr>
+        			<td><%= task.id %></td>
+        			<td><%= task.pair %></td>
+        			<td><%= task.sentence %></td>
+        			<td><a href="/experiment/<%= task.id %>">detail</a></td>
+        			<td><form class="form-inline" method="post" action="/admin/remove_task?id=<%= task.id %>">
+        					<input type="submit" class="btn btn-danger" value="Delete">
+        				</form>
+        			</td>
+        		</tr>
+        	<% end %>
+        </table>
+
+
+        <form class="well form-inline" method="post" action="/admin/add_task">
+        	<select id="new-translation-pair" name="pair">
+        		<% @pairs.each do |pair| %>
+        			<option values="<%= pair %>"><%= pair %></option>
+        		<% end %>
+		      </select>
+				  <input type="text" name="sentence" class="input-small" placeholder="New experiment task sentence" style="width: 600px;">
+				  <button type="submit" class="btn btn-success">Create experiment task</button>
+				</form>
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>Created by Ondřej Odcházel & Ondřej Bojar - <a href="http://ufal.mff.cuni.cz/">Institute of Formal and Applied Linguistics</a>, 
+Charles University in Prague<br>
+Supported by the grant:
+FP7-ICT-2007-3-231720 (EuroMatrix Plus)</p>
+      </footer>
+
+    </div>
+
+
+
+</body>
+</html>
