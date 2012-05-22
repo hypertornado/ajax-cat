@@ -3,8 +3,8 @@ module AjaxCat
 	class AjaxCatServer < Sinatra::Base
 
 		before do
-			puts request.inspect
-			puts "====="
+			#puts request.inspect
+			#puts "====="
 		end
 
 		get '/' do 

@@ -29,8 +29,7 @@ module AjaxCat
   	def initialize(port = DEFAULT_PORT, silent = true)
       logger = Logger.new
       logger.log "starting ajax-cat"
-      Thin::Logging.silent = false
-      #Thin::Logging.silent = silent
+      Thin::Logging.silent = silent
       system("mkdir #{Dir.home}/.ajax-cat 2>/dev/null")
       @settings = JSON.parse(File.read("ajax-cat.ini.json"))
       port = @settings["port"] if port == DEFAULT_PORT
