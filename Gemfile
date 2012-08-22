@@ -11,7 +11,8 @@ gem 'colorize', "~> 0.5.8"
 gem "thin", "~> 1.3.1"
 gem "thor", "~> 0.15.2"
 gem "sqlite3", "~> 1.3.3"
-gem "activerecord"
+gem "activerecord", ">= 3.2.3"
+gem "activesupport", ">= 3.2.3"
 
 group :development do
   gem "rdoc", "~> 3.12"

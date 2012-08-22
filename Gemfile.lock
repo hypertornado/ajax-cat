@@ -55,7 +55,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord
+  activerecord (>= 3.2.3)
+  activesupport (>= 3.2.3)
   bundler (~> 1.0.0)
   colorize (~> 0.5.8)
   curb (~> 0.8.0)
