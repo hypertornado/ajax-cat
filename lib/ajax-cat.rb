@@ -1,3 +1,5 @@
+#ssh -L 8888:10.10.24.118:80 odchazel@ufallab.ms.mff.cuni.cz
+
 require 'sinatra/base'
 require 'thin'
 require 'json'
@@ -122,4 +124,7 @@ module AjaxCat
   end
 
 end
+
+#AjaxCat::Runner.new(8585)
+
 

@@ -35,33 +35,82 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <h1>Experiments</h1>
+        <h1>A/B tests</h1>
 
         <table class="table table-bordered table-striped table-condensed" id="translation-list">
-        	<tr><th>#</th><th>Pair</th><th>Sentence</th><th></th><th></th></tr>
+        	<tr><th>Test</th><th></th></tr>
         	<% Task.all.each do |task| %>
         		<tr>
-        			<td><%= task.id %></td>
-        			<td><%= task.pair %></td>
-        			<td><%= task.sentence %></td>
-        			<td><a href="/experiment/<%= task.id %>">detail</a></td>
-        			<td><form class="form-inline" method="post" action="/admin/remove_task?id=<%= task.id %>">
-        					<input type="submit" class="btn btn-danger" value="Delete">
+        			<td>
+                <a href="/experiment/<%= task.id %>">
+                  <%= task.name %> (<%= task.pair %>)
+                </a>
+              </td>
+        			<td><form method="post" action="/admin/remove_task?id=<%= task.id %>">
+        					<input type="submit" class="btn btn-danger" value="Delete" onclick="return confirm('Really want to delete this test?')">
         				</form>
         			</td>
         		</tr>
         	<% end %>
         </table>
 
+        <h1>Create new A/B test</h1>
 
-        <form class="well form-inline" method="post" action="/admin/add_task">
-        	<select id="new-translation-pair" name="pair">
-        		<% @pairs.each do |pair| %>
-        			<option values="<%= pair %>"><%= pair %></option>
-        		<% end %>
-		      </select>
-				  <input type="text" name="sentence" class="input-small" placeholder="New experiment task sentence" style="width: 600px;">
-				  <button type="submit" class="btn btn-success">Create experiment task</button>
+        <form class="well form-horizontal" method="post" action="/admin/add_task">
+
+          <div class="control-group">
+            <label class="control-label" for="new-translation-name">Name of test: </label>
+            <div class="controls">
+              <input id="new-experiment-name" name="name">
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="new-experiment-pair">Language: </label>
+            <div class="controls">
+          	<select id="new-experiment-pair" name="pair">
+          		<% @pairs.each do |pair| %>
+          			<option values="<%= pair %>"><%= pair %></option>
+          		<% end %>
+  		      </select>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="new-experiment-sentence">Sentences: </label>
+            <div class="controls">
+              <span id="sentences-stack">
+                <input id="new-experiment-sentence" name="sentences[]">
+              </span>
+              <br>
+              <a href="#" onclick="$('#sentences-stack').append('<br><input name=\'sentences[]\'>')">add sentence</a>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">A/B groups: </label>
+            <div class="controls">
+              <table class="table table-bordered">
+                <tr><th></th><th>A</th><th>B</th></tr>
+
+                <tr><td>Test user group size<br>(use even numbers)</td>
+                  <td colspan="2">
+                    <center><input type="number" name="users" value="6" step="2" min="2" max="1000000"></center>
+                  </td>
+                </tr>
+
+                <tr><td>Suggestion box present</td>
+                  <td><input type="checkbox" checked name="suggestion-a"></td>
+                  <td><input type="checkbox" checked name="suggestion-b"></td>
+                </tr>
+
+              </table>
+            </div>
+          </div>
+
+          <div class="form-actions">
+				    <button type="submit" class="btn btn-success">Create A/B test</button>
+          </div>
 				</form>
 
       </div><!--/row-->

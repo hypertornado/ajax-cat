@@ -28,19 +28,22 @@ class AjaxCatList
     unless filter.test(email)
       alert "Write your email, please."
       return
+    $.cookie("email", email)
     $.ajax "/admin/get_experiment"
       data:
         email: email
         pair: pair
       success: (data) =>
         data = JSON.parse(data)
-        id = @add_translation(data.sentence, "EXPERIMENT ##{data.task_id}, #{data.email}", data.pair, data.task_id, data.email)
+        id = @add_translation(JSON.parse(data.sentences), "EXPERIMENT ##{data.task_id}, #{data.email}", data.pair, data.task_id, data.email, data)
+        #return
         window.location = "/translation.html##{id}"
       error: =>
         alert "Could not find experiment for you."
 
   new_experiment_translation: =>
     $("#new-experiment-pair").html("")
+    $("#new-experiment-email").val($.cookie("email"))
     $.ajax "/api/info"
       success: (data) =>
         data = JSON.parse(data)
@@ -93,7 +96,7 @@ class AjaxCatList
     $('#new-translation-modal').modal('hide')
     @show_translations()
 
-  add_translation: (text, name, pair, task_id = false, email = false) =>
+  add_translation: (text, name, pair, task_id = false, email = false, experiment_data) =>
     if localStorage['ac-data']
       docs = JSON.parse(localStorage['ac-data'])
     else
@@ -104,7 +107,12 @@ class AjaxCatList
     doc.pair = pair
     doc.email = email
     doc.task_id = task_id
-    doc.source = Utils.split_source(text)
+    #is experiment
+    if jQuery.isArray(text)
+      doc.source = text
+      doc.options = JSON.parse(experiment_data.options)
+    else
+      doc.source = Utils.split_source(text)
     doc.target = new Array(doc.source.length)
     docs.push(doc.id)
     localStorage.setItem('ac-data', JSON.stringify(docs))

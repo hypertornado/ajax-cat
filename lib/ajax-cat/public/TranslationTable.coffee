@@ -63,7 +63,26 @@ class TranslationTable
     return true if $("th.ac-source").slice(position, (position + 1)).hasClass('ac-selected')
     return false
 
-  mark_words: (words) =>
+  #use edit distance to mark written words
+  mark_words: (word) =>
+    word = Utils.trim word
+    best_result = 10000
+    best_element = null
+    maximal_acceptable_distance = 1
+    maximal_acceptable_distance = 0 if word.length < 5
+    maximal_acceptable_distance = 2 if word.length > 10
+    for el in $(".ac-word div")
+      element_text = Utils.trim($(el).text())
+      result = Utils.edit_distance(word, element_text)
+      if result < best_result
+        best_result = result
+        best_element = $(el)
+    if best_element != null and best_result <= maximal_acceptable_distance
+      @mark_interval(best_element.data('position-from'), best_element.data('position-to'))
+
+  #when more words, there should be fix on server side giving most likely continuation
+  mark_words_OLD: (words) =>
+    console.log "MARKING WORDS: #{words}"
     words = "#{words} "
     for el in $(".ac-word div")
       el_text = Utils.trim $(el).text()

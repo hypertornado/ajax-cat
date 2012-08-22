@@ -1,0 +1,15 @@
+{
+  "port": 8585,
+  "pairs": [
+    {
+      "name": "de-en",
+      "moses_path": "moses",
+      "moses_ini_path": "/Users/ondrejodchazel/projects/ajax-cat/ajax-cat-new/lib/../test/fixtures/moses.ini"
+    },
+    {
+      "name": "en-cs",
+      "moses_path": "moses",
+      "moses_ini_path": "/Users/ondrejodchazel/projects/ajax-cat/models/en-cs/moses.ini"
+    }
+  ]
+}

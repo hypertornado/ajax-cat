@@ -44,3 +44,19 @@ class Utils
 
   @trim: (text) =>
     return text.replace(/^\s+|\s+$/g, "")
+
+  @edit_distance: (source, target) ->
+    a = []
+    for i in [0..source.length]
+      a[i] = new Array(target.length + 1)
+      a[i][0] = i
+    a[0] = [0..target.length]
+
+    for i in [1..source.length]
+      for j in [1..target.length]
+        substitute_cost = a[i - 1][j - 1]
+        substitute_cost += 1 if (source.charAt(i - 1) != target.charAt(j - 1))
+        a[i][j] = Math.min(substitute_cost, a[i-1][j] + 1, a[i][j-1] + 1)
+    return a[source.length][target.length]
+
+

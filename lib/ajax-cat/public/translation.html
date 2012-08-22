@@ -30,9 +30,6 @@
               <li><a href="#about" id="preview">Preview</a></li>
             </ul>
             <p class="pull-right">
-              <button class="btn btn-info" id="send-experiment">
-                Send experiment results
-              </button>
               <button class="btn btn-info" id="save">
                 Save into browser
               </button>
@@ -47,10 +44,13 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <h1>Translations</h1>
-        <span id="time"></span>
+        <h2><span id="translated-status"></span> <span id="time"></span></h2>
+        <button class="btn btn-info btn-large" id="send-experiment">
+          Next sentence > 
+        </button>
 
         <table class=" table-bordered table-condensed" id="translation">
-        	<tr>
+        	<tr id="top-translations">
             <td width="50%" id="source-top"></td>
             <td width="50%" id="target-top"></td>
           </tr>
@@ -62,7 +62,7 @@
               <div id="translation-table-container"></div> 
             </td>
           </tr>
-        	<tr>
+        	<tr id="bottom-translations">
             <td id="source-bottom"></td>
             <td id="target-bottom"></td>
           </tr>
@@ -70,7 +70,13 @@
 
       </div><!--/row-->
 
-      <div id="log"></div>
+      <div id="experiment-settings" style="display: none;">
+        <h2>Current experiment settings</h2>
+        <table class="table">
+          <tr><th>Suggestion panel:</th><td id="suggestion-panel-is-on"></td></tr>
+        </table>
+      </div>
+      <div id="log" style="display: none;"></div>
 
       <hr>
 

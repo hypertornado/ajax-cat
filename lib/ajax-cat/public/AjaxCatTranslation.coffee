@@ -1,6 +1,8 @@
 class AjaxCatTranslation
 
   cur_position: false
+  experiment: false
+  param_suggestion: true
 
   constructor: ->
     @now = Date.now()
@@ -46,22 +48,34 @@ class AjaxCatTranslation
     $("#time").html(t)
     setTimeout(@time, 10)
 
+  change_experiment_sentence: =>
+    if @cur_position + 1 < @doc.source.length
+      @change_position(@cur_position + 1)
+    else
+      $("#send-experiment").hide()
+      $.ajax "/admin/save_experiment"
+        data:
+          "log_id": @doc.task_id
+          log: JSON.stringify(@doc)
+        type: "post"
+        success: =>
+          alert "Experiment saved."
+          window.location = "/"
+        error: =>
+          alert "Could not save experiment."
+
+
   prepare_test: =>
     AjaxCatList.delete_document(@hash)
+    @experiment = true
     $("#save").hide()
+    $("#experiment-settings").show()
+    $("#top-translations").hide()
+    $("#bottom-translations").hide()
     $("#send-experiment").show()
     $("#send-experiment").click(
       =>
-        $("#send-experiment").hide()
-        $.ajax "/admin/save_experiment"
-          data:
-            log: JSON.stringify(@doc)
-          type: "post"
-          success: =>
-            alert "Experiment saved."
-            window.location = "/"
-          error: =>
-            alert "Could not save experiment."
+        @change_experiment_sentence()
     )
     @doc.log = []
     @time()
@@ -76,7 +90,9 @@ class AjaxCatTranslation
     )
     new_log.type = type if type
     new_log.param = param if param
-    @doc.log.push(new_log)
+    if @doc.log[@cur_position] == undefined
+      @doc.log[@cur_position] = []
+    @doc.log[@cur_position].push(new_log)
     $("#log").append(JSON.stringify(new_log) + "<br>")
 
 
@@ -151,13 +167,14 @@ class AjaxCatTranslation
 
 
   load_translation_table: (sentence) =>
+    @table_request.abort() if @table_request
     sentence = Utils.tokenize(sentence)
     if sentence.match(/^[\ \t]*$/)
       $("#translation-table-container").html("")
       @suggestions.clear()
       return
     $("#translation-table-container").text("")
-    $.ajax "/api/table"
+    @table_request = $.ajax "/api/table"
       data:
         pair: @pair
         q: sentence
@@ -169,6 +186,13 @@ class AjaxCatTranslation
         #alert "failed to load translation table"
 
   change_position: (position) =>
+    if @experiment
+      return if not ((position == 0 and @cur_position == false) or (@cur_position + 1 == position))
+      @param_suggestion = @doc.options[position].suggestion
+      $("#suggestion-panel-is-on").text(@param_suggestion)
+      $("#translated-status").text("translating sentence #{position + 1} out of #{@doc.source.length}")
+      $("#send-experiment").text("Finish experiment") if (position + 1) == @doc.source.length
+    @suggestions.clear()
     @save_target() if @cur_position != false
     $("#source-top").children().slice(0,position).show()
     $("#source-top").children().slice(position,@length).hide()

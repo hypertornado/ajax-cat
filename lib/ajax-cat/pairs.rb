@@ -14,7 +14,7 @@ module AjaxCat
          create table tasks (
             id integer primary key,
             pair varchar (30),
-            sentence text
+            name varchar (30)
           )
         SQL
         )
@@ -25,6 +25,8 @@ module AjaxCat
             task_id integer,
             email varchar (60),
             time current_timestamp,
+            sentences text,
+            options text,
             log text
           )
         SQL

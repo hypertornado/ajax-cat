@@ -23,17 +23,19 @@ class Suggestions
     )
 
   clear: =>
+    @suggestion_request.abort() if @suggestion_request
     $(".ac-suggestion").text("")
     $(".ac-suggestion").removeClass('suggestion-enabled')
     $(".ac-suggestion").removeClass('suggestion-active')
 
   load_suggestions: =>
     @clear()
+    return unless @translation.param_suggestion
     sentence = $("#source-sentence").text()
     sentence = Utils.tokenize(sentence)
     translated = Utils.tokenize($("#source-target").text())
     covered = @translation.table.covered_vector()
-    $.ajax "/api/suggestion"
+    @suggestion_request = $.ajax "/api/suggestion"
       data:
         pair: @translation.pair
         q: Utils.tokenize(sentence)
@@ -48,8 +50,13 @@ class Suggestions
   take_suggestion: =>
     return if (@get_position() == false)
     text = $(".suggestion-active span").text()
+    
+    from = $(".suggestion-active").data('from')
+    to = $(".suggestion-active").data('to')
     @translation.add_words(text)
-    @translation.table.mark_words(text)
+    #alert "#{from}-#{to}"
+    @translation.table.mark_interval(from, to)
+    #@translation.table.mark_words(text)
 
 
   process_suggestions: (data) =>
@@ -57,7 +64,9 @@ class Suggestions
     for suggestion in data.suggestions
       translation = $("#target-sentence").val()
       el = $(".ac-suggestion").slice(i, (i + 1))
-      el.html("#{translation} <span>#{suggestion}</span>")
+      el.html("#{translation} <span>#{suggestion.text}</span>")
+      el.data('from', suggestion.from)
+      el.data('to', suggestion.to)
       el.addClass('suggestion-enabled')
       i += 1
 

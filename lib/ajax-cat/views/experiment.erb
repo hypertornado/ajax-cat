@@ -35,14 +35,69 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <h1><%= @task.sentence %> <small><%= @task.pair %></small></h1>
-
-        <table class="table table-bordered table-striped table-condensed">
-          <% @task.logs.each do |log| %>
-            <tr><td><%= log.id %></td><td><%= log.time %></td><td><%= log.email %></td></tr>
-            <tr><td colspan="3"><%= log.log %></td></tr>
+        <h1><%= @task.id %> - <%= @task.name %> <small><%= @task.pair %></small></h1>
+        <%
+          finished_a = 0
+          finished_b = 0
+          count_a = 0
+          count_b = 0
+          time_a = 0
+          time_b = 0
+        %>
+        <% @task.logs.each_with_index do |log, i| %>
+          <h2>#<%= i+1 %> (<%= log.id %>)
+            <% parsed = JSON.parse(log.log) if log.log %>
+            <% if log.log %>
+              completed by <%= parsed['email'] %>
+            <% else %>
+              <small>not completed yet</small>
+            <% end %>
+          </h2>
+          <% options = JSON.parse(log.options) %>
+          <% sentences = JSON.parse(log.sentences) %>
+          <% sentences.each_with_index do |sentence, j| %>
+            <%
+              type = options[j]['type']
+              count_a += 1 if type == "a"
+              count_b += 1 if type == "b"
+            %>
+            <h3><%= (j + 1)%>) <%= sentence %><small><%= options[j] %></small></h3>
+            <% if parsed %>
+                finished in
+                <%
+                  time = (parsed['log'][j].last['time'] - parsed['log'][j].first['time'])
+                  finished_a += 1 if type == "a"
+                  finished_b += 1 if type == "b"
+                  time_a += time if type == "a"
+                  time_b += time if type == "b"
+                %>
+                <%= time / 1000.to_f %>
+                seconds<br>
+              <textarea style="width: 600px; height: 200px;">
+<% parsed['log'][j].each_with_index do |l, k| %>
+<%= l %> 
+<% end %>
+              </textarea>
+            <% end %>
           <% end %>
-        </table>
+        <% end %>
+
+
+      <hr>
+      <h2>Results</h2>
+
+      <table class="table table-bordered table-striped">
+        <tr><th>Group</th><th width="50%">A</th><th width="50%">B</th></tr>
+        <tr><th nowrap>Finished sentences:</th>
+          <td><%= finished_a %> / <%= count_a %></td>
+          <td><%= finished_b %> / <%= count_b %></td>
+        </tr>
+        <tr><th nowrap>Average time per sentence:</th>
+          <td><%= time_a / 1000.to_f %> seconds</td>
+          <td><%= time_b / 1000.to_f %> seconds</td>
+        </tr>
+      </table>
+
       </div><!--/row-->
 
       <hr>
