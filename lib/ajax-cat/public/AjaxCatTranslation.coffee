@@ -80,7 +80,6 @@ class AjaxCatTranslation
     @doc.log = []
     @time()
     $("#log").append("<h2>Log</h2>")
-    @log()
 
   log: (type = false, param = false) =>
     return unless @doc.task_id
@@ -103,15 +102,15 @@ class AjaxCatTranslation
   bind_events: =>
     $("#target-sentence").on('keyup',
       =>
-        @log()
+        #@log()
     )
     $("#target-sentence").on('click',
       =>
-        @log()
+        #@log()
     )
     $("#target-sentence").on('keydown'
       (event) =>
-        @log()
+        @log("keydown", event.which)
         switch event.which
           when 13 #enter
             @suggestions.take_suggestion()
@@ -179,6 +178,7 @@ class AjaxCatTranslation
         pair: @pair
         q: sentence
       success: (data) =>
+        @log("translation_table_loaded", data)
         @table = new TranslationTable(@, data)
         $("#translation-table-container").html(@table.get_table())
         $(window).trigger('loadSuggestions')
@@ -192,6 +192,7 @@ class AjaxCatTranslation
       $("#suggestion-panel-is-on").text(@param_suggestion)
       $("#translated-status").text("translating sentence #{position + 1} out of #{@doc.source.length}")
       $("#send-experiment").text("Finish experiment") if (position + 1) == @doc.source.length
+      @log("start")
     @suggestions.clear()
     @save_target() if @cur_position != false
     $("#source-top").children().slice(0,position).show()

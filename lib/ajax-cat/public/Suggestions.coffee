@@ -35,12 +35,15 @@ class Suggestions
     sentence = Utils.tokenize(sentence)
     translated = Utils.tokenize($("#source-target").text())
     covered = @translation.table.covered_vector()
+    data = (
+      pair: @translation.pair
+      q: Utils.tokenize(sentence)
+      covered: covered
+      translated: translated
+    )
+    @translation.log("load_suggestions", data)
     @suggestion_request = $.ajax "/api/suggestion"
-      data:
-        pair: @translation.pair
-        q: Utils.tokenize(sentence)
-        covered: covered
-        translated: translated
+      data: data
       success: (data) =>
         data = JSON.parse(data)
         @process_suggestions(data)
@@ -54,8 +57,13 @@ class Suggestions
     from = $(".suggestion-active").data('from')
     to = $(".suggestion-active").data('to')
     @translation.add_words(text)
-    #alert "#{from}-#{to}"
+    log_data(
+      text: text
+      from: from
+      to: to
+    )
     @translation.table.mark_interval(from, to)
+    @load_suggestions()
     #@translation.table.mark_words(text)
 
 

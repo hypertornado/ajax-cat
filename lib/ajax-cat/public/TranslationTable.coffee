@@ -2,7 +2,6 @@ class TranslationTable
 
   constructor: (@translation, data) ->
     @data = JSON.parse(data)
-    console.log @data
 
   get_table: =>
     ret = $("<table>"

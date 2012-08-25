@@ -125,6 +125,6 @@ module AjaxCat
 
 end
 
-#AjaxCat::Runner.new(8585)
+AjaxCat::Runner.new(8585)
 
 
