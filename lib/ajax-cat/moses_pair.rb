@@ -10,7 +10,7 @@ module AjaxCat
   		@fifo_path = "#{Dir.home}/.ajax-cat/#{name}_fifo.fifo"
       system("rm -f #{@fifo_path}; mkfifo #{@fifo_path}")
       t1 = Thread.new{reader()}
-      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct -include-alignment-in-n-best true -continue-partial-translation true > #{@fifo_path} 2>>#{Dir.home}/.ajax-cat/#{name}_moses.log", "w")
+      @pipe = IO.popen("#{moses_path} -f #{moses_ini_path} -n-best-list - 300 distinct -include-alignment-in-n-best true -continue-partial-translation true > #{@fifo_path}", "w")
       process_request(Request::Raw.new("start_test"))
       @logger.log "pair started".green
     end
@@ -28,8 +28,14 @@ module AjaxCat
         process_string(request.prepare_moses_request)
       end
       #TODO: avoid active waiting somehow
+      waiting = 0
       until request.processed 
         sleep 0.001
+        waiting += 1
+        if waiting > 10000
+          @logger.log "FAILED TO PROCESS REQUEST"
+          break
+        end
       end
       @logger.log "processed #{request.class.name} '#{request.sentence.blue}'"
       request.result
@@ -40,6 +46,7 @@ module AjaxCat
       last_position = -1
 
       while l = f.readline
+        puts "MOSES: #{l}"
         position = Request::Raw.parse_position(l)
         if position != last_position
           if (last_position % 2 == 0)
