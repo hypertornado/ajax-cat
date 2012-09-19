@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ajax-cat"
-  s.version = "2.0.3"
+  s.version = "2.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ondrej Odchazel"]
-  s.date = "2012-08-25"
+  s.date = "2012-09-19"
   s.description = "computer-aided translation backed by machine translation"
   s.email = "odchazel@gmail.com"
   s.executables = ["ajax-cat"]
