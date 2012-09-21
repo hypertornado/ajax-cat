@@ -101,6 +101,7 @@ module AjaxCat
 		end
 
 		post '/admin/save_experiment' do
+			File.open("log_#{Time.now.to_i}", 'w') {|f| f.write(params[:log]) }
 			@log = Log.find(params[:log_id])
 			data = JSON.parse(params[:log])
 			@log.time = Time.now
